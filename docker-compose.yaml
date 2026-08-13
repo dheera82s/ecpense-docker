@@ -5,29 +5,36 @@ volumes:
   mysql:
 
 services:
+  mysql:
+    image: mysql:1.0.0
+    container_name: mysql
+    networks:
+      - expense
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
 
   backend:
     image: backend:1.0.0
-    networks:
-      - expense
     container_name: backend
-    depends_on:
-      - mysql
-
-  mysql:
-    image: mysql:1.0.0
     networks:
       - expense
-    container_name: mysql
-    volumes:
-      - mysql:/var/lib/mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   frontend:
     image: frontend:1.0.0
+    container_name: frontend
     networks:
       - expense
-    container_name: frontend
     ports:
       - "80:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
