@@ -1,12 +1,12 @@
-FROM node:20
+FROM node:20-alpine
 
-RUN groupadd -r expense && useradd -r -m -g expense expense
+RUN addgroup -S expense && adduser -S expense -G expense
 
 WORKDIR /opt/backend
 
-COPY package.json .
+COPY package*.json ./
 
-RUN npm install
+RUN npm install --omit=dev && npm cache clean --force
 
 COPY *.js .
 
