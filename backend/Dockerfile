@@ -1,5 +1,5 @@
 FROM node:20
-RUN addgroup -S expense && adduser -S expense -G expense
+RUN groupadd -r expense && useradd -r -g expense expense
 RUN mkdir /opt/backend
 RUN chown -R expense:expense /opt/backend
 USER expense
