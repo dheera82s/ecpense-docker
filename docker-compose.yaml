@@ -1,17 +1,19 @@
 networks:
-  # The presence of these objects is sufficient to define them
   expense: {}
+
 volumes:
   mysql:
+
 services:
+
   backend:
     image: backend:1.0.0
     networks:
       - expense
-      container_name: backend
-      depends_on:
+    container_name: backend
+    depends_on:
       - mysql
-  #docker run -d --name mysql --network expense -v mysql mysql:1.0.0
+
   mysql:
     image: mysql:1.0.0
     networks:
@@ -27,5 +29,5 @@ services:
     container_name: frontend
     ports:
       - "80:80"
-      depends_on:
-      - backend    
+    depends_on:
+      - backend
