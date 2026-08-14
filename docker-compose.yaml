@@ -6,7 +6,7 @@ volumes:
 
 services:
   mysql:
-    image: mysql:1.0.0
+    image: dheera4610/mysql:1.0.0
     container_name: mysql
     networks:
       - expense
@@ -20,7 +20,7 @@ services:
       start_period: 20s
 
   backend:
-    image: backend:1.0.0
+    image: dheera4610/backend:1.0.0
     container_name: backend
     networks:
       - expense
@@ -29,7 +29,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: frontend:1.0.0
+    image: dheera4610/frontend:1.0.0
     container_name: frontend
     networks:
       - expense
